@@ -31,9 +31,10 @@ RUN apt-get update \
     && curl -L -o /machine-agent.zip -b /cookies.txt $BASEURL/machine-bundle/$VERSION/machineagent-bundle-64bit-linux-$VERSION.zip \
     && curl -L -o /app-agent.zip -b /cookies.txt $BASEURL/sun-jvm/$VERSION/AppServerAgent-$VERSION.zip \
     && unzip /machine-agent.zip -d /machine-agent \
-    && apt-get remove --purge -q -y curl \
+    && unzip /app-agent.zip -d /app-agent-temp/ \
+    && apt-get remove --purge -q -y curl unzip \
     && apt-get autoremove -q -y \
     && apt-get clean -q -y \
-    && rm -rf /machine-agent.zip /cookies.txt /tmp/*
+    && rm -rf /machine-agent.zip /app-agent.zip /cookies.txt /tmp/*
 
 CMD /bin/bash -c "/setup_agent.sh" && /machine-agent/bin/machine-agent start

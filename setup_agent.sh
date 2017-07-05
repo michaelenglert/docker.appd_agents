@@ -1,7 +1,5 @@
 #!/bin/bash
 
-unzip /app-agent.zip -d /app-agent-temp/
-sed -i -e "/<controller-host>/c\<controller-host>$APPDYNAMICS_CONTROLLER_HOST_NAME<\/controller-host>" /app-agent-temp/conf/controller-info.xml
 sed -i -e "/<controller-port>/c\<controller-port>$APPDYNAMICS_CONTROLLER_PORT<\/controller-port>" /app-agent-temp/conf/controller-info.xml
 sed -i -e "/<controller-ssl-enabled>/c\<controller-ssl-enabled>$APPDYNAMICS_CONTROLLER_SSL_ENABLED<\/controller-ssl-enabled>" /app-agent-temp/conf/controller-info.xml
 sed -i -e "/<account-name>/c\<account-name>$APPDYNAMICS_AGENT_ACCOUNT_NAME<\/account-name>" /app-agent-temp/conf/controller-info.xml
