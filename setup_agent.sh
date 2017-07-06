@@ -9,5 +9,9 @@ sed -i -e "/<agent-runtime-dir>/c\<agent-runtime-dir>\/<\/agent-runtime-dir>" /a
 sed -i -e "/<\!-- property name=\"config-poll-interval\"/c\<property name=\"appdynamics.jvm.shutdown.mark.node.as.historical\" value=\"true\" \/>" /app-agent-temp/ver*/conf/app-agent-config.xml
 
 cp /app-agent-temp/conf/controller-info.xml /app-agent-temp/ver*/conf/controller-info.xml
+cp /app-agent-temp/conf/controller-info.xml /machine-agent/conf/controller-info.xml
+
+sed -i -e "/<\/controller-info>/i <docker-enabled>true<\/docker-enabled>" /machine-agent/conf/controller-info.xml
+
 cp -r /app-agent-temp/* /app-agent/
 rm -rf /app-agent-temp
