@@ -32,6 +32,7 @@ RUN apt-get update \
     && curl -L -o /app-agent.zip -b /cookies.txt $BASEURL/sun-jvm/$VERSION/AppServerAgent-$VERSION.zip \
     && unzip /machine-agent.zip -d /machine-agent \
     && unzip /app-agent.zip -d /app-agent-temp/ \
+    && sed -i -e "/<\/controller-info>/i <docker-enabled>true<\/docker-enabled>" /machine-agent/conf/controller-info.xml \
     && apt-get remove --purge -q -y curl unzip \
     && apt-get autoremove -q -y \
     && apt-get clean -q -y \
