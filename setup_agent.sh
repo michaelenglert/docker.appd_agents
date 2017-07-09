@@ -20,3 +20,5 @@ sed -i -e "/<\/controller-info>/i <docker-enabled>true<\/docker-enabled>" /machi
 
 cp -r /app-agent-temp/* /app-agent/
 rm -rf /app-agent-temp
+
+exit 0
