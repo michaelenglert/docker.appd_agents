@@ -1,5 +1,6 @@
 AppDynamics Agents Docker Image
 ======
+![Build Status](https://jenkins.appd.duckdns.org/buildStatus/icon?job=DOCKER_appd_agents)
 # Introduction
 This Docker Image contains the AppDynamics Machine Agent and the Java Agent.
 # Build
