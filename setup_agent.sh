@@ -16,7 +16,7 @@ sed -i -e "/<controller-ssl-enabled>/c\<controller-ssl-enabled>$APPDYNAMICS_CONT
 sed -i -e "/<account-name>/c\<account-name>$APPDYNAMICS_AGENT_ACCOUNT_NAME<\/account-name>" /machine-agent/conf/controller-info.xml
 sed -i -e "/<account-access-key>/c\<account-access-key>$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY<\/account-access-key>" /machine-agent/conf/controller-info.xml
 sed -i -e "/<sim-enabled>/c\<sim-enabled>$APPDYNAMICS_SIM_ENABLED<\/sim-enabled>" /machine-agent/conf/controller-info.xml
-sed -i -e "/<\/controller-info>/i <docker-enabled>true<\/docker-enabled>" /machine-agent/conf/controller-info.xml
+sed -i -e "/<\/controller-info>/i <docker-enabled>$APPDYNAMICS_DOCKER_ENABLED<\/docker-enabled>" /machine-agent/conf/controller-info.xml
 
 cp -r /app-agent-temp/* /app-agent/
 rm -rf /app-agent-temp
