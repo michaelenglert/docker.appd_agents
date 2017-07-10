@@ -18,3 +18,5 @@ docker build \
 --build-arg BASEURL=https://aperture.appdynamics.com/download/prox/download-file \
 --build-arg VERSION=$version \
 -t $image:$version .
+
+exit 0
