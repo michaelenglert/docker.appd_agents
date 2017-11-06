@@ -41,4 +41,4 @@ docker run -d --name <app-container-name> \
     snasello/liferay-6.2
 ```
 
-[image.sh]: /image.sh
+[build.sh]: /build.sh
