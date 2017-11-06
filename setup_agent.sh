@@ -10,14 +10,6 @@ sed -i -e "/<\!-- property name=\"config-poll-interval\"/c\<property name=\"appd
 
 cp /app-agent-temp/conf/controller-info.xml /app-agent-temp/ver*/conf/controller-info.xml
 
-sed -i -e "/<controller-host>/c\<controller-host>$APPDYNAMICS_CONTROLLER_HOST_NAME<\/controller-host>" /machine-agent/conf/controller-info.xml
-sed -i -e "/<controller-port>/c\<controller-port>$APPDYNAMICS_CONTROLLER_PORT<\/controller-port>" /machine-agent/conf/controller-info.xml
-sed -i -e "/<controller-ssl-enabled>/c\<controller-ssl-enabled>$APPDYNAMICS_CONTROLLER_SSL_ENABLED<\/controller-ssl-enabled>" /machine-agent/conf/controller-info.xml
-sed -i -e "/<account-name>/c\<account-name>$APPDYNAMICS_AGENT_ACCOUNT_NAME<\/account-name>" /machine-agent/conf/controller-info.xml
-sed -i -e "/<account-access-key>/c\<account-access-key>$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY<\/account-access-key>" /machine-agent/conf/controller-info.xml
-sed -i -e "/<sim-enabled>/c\<sim-enabled>$APPDYNAMICS_SIM_ENABLED<\/sim-enabled>" /machine-agent/conf/controller-info.xml
-sed -i -e "/<\/controller-info>/i <docker-enabled>$APPDYNAMICS_DOCKER_ENABLED<\/docker-enabled>" /machine-agent/conf/controller-info.xml
-
 cp -r /app-agent-temp/* /app-agent/
 rm -rf /app-agent-temp
 

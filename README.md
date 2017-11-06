@@ -23,6 +23,7 @@ docker run -d --name <container-name> \
     -e APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY="<account-access-key>" \
     -e APPDYNAMICS_SIM_ENABLED="true/false" \
     -e APPDYNAMICS_CONTROLLER_SSL_ENABLED="true/false" \
+    -e APPDYNAMICS_DOCKER_ENABLED="true/false" \
     <image-name>
 ```
 Notes:
