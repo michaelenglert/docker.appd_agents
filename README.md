@@ -4,7 +4,7 @@ AppDynamics Agents Docker Image
 # Introduction
 This Docker Image contains the AppDynamics Machine Agent and the Java Agent.
 # Build
-Use the [image.sh] Script to build the Docker Image. It will interactively ask for:
+Use the [build.sh] Script to build the Docker Image. It will interactively ask for:
 * ```Version``` -  AppDynamics Agent Version. Is also used as tag for the image
 * ```Portal User``` - AppDynamics Portal User Name to download the agents.
 * ```Portal Password``` - AppDynamics Portal Password to download the agents.
@@ -36,10 +36,9 @@ Notes:
 docker run -d --name <app-container-name> \
     -v <host-folder>:/app-agent \
     -e APPDYNAMICS_AGENT_APPLICATION_NAME="<application-name>" \
-    -e APPDYNAMICS_AGENT_TIER_NAME="<tier-name" \
-    -e CATALINA_OPTS= "-Dappdynamics.agent.reuse.nodeName.prefix=$APPDYNAMICS_AGENT_TIER -Dappdynamics.agent.reuse.nodeName=true -javaagent:/app-agent/javaagent.jar"
+    -e APPDYNAMICS_AGENT_TIER_NAME="<tier-name>" \
+    -e CATALINA_OPTS="-Dappdynamics.agent.reuse.nodeName.prefix=$APPDYNAMICS_AGENT_TIER -Dappdynamics.agent.reuse.nodeName=true \ -javaagent:/app-agent/javaagent.jar"
     snasello/liferay-6.2
 ```
-
 
 [image.sh]: /image.sh
