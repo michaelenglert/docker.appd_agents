@@ -4,9 +4,8 @@ AppDynamics Agents Docker Image
 This Docker Image contains the AppDynamics Machine Agent and the Java Agent.
 # Build
 Use the [build.sh] Script to build the Docker Image. It will interactively ask for:
-* ```Version``` -  AppDynamics Agent Version. Is also used as tag for the image
-* ```Portal User``` - AppDynamics Portal User Name to download the agents.
-* ```Portal Password``` - AppDynamics Portal Password to download the agents.
+* ```MACHINE_AGENT_VERSION``` -  AppDynamics Machine Agent Version.
+* ```APP_AGENT_VERSION``` -  AppDynamics Java Agent Version.
 * ```Image Name``` - Image Name for the Docker Image
 
 # Run

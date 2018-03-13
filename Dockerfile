@@ -1,10 +1,9 @@
 FROM debian:jessie
 MAINTAINER Michael Englert <michi.eng@gmail.com>
 
-ARG USER
-ARG PASSWORD
 ARG BASEURL
-ARG VERSION
+ARG MACHINE_AGENT_VERSION
+ARG APP_AGENT_VERSION
 
 ENV APPDYNAMICS_CONTROLLER_HOST_NAME="" \
     APPDYNAMICS_CONTROLLER_PORT="" \
@@ -22,9 +21,8 @@ RUN apt-get update \
     && apt-get install -q -y --fix-missing unzip curl \
     && chmod +x /setup_agent.sh \
     && mkdir /machine-agent \
-    && curl --referer http://www.appdynamics.com -c cookies.txt -d "username=$USER&password=$PASSWORD" https://login.appdynamics.com/sso/login/ \
-    && curl -L -o /machine-agent.zip -b /cookies.txt $BASEURL/machine-bundle/$VERSION/machineagent-bundle-64bit-linux-$VERSION.zip \
-    && curl -L -o /app-agent.zip -b /cookies.txt $BASEURL/sun-jvm/$VERSION/AppServerAgent-$VERSION.zip \
+    && curl -L -o /machine-agent.zip -b /cookies.txt $BASEURL/machine/$MACHINE_AGENT_VERSION/machineagent-bundle-64bit-linux-$MACHINE_AGENT_VERSION.zip \
+    && curl -L -o /app-agent.zip -b /cookies.txt $BASEURL/java/$APP_AGENT_VERSION/AppServerAgent-$APP_AGENT_VERSION.zip \
     && unzip /machine-agent.zip -d /machine-agent \
     && unzip /app-agent.zip -d /app-agent-temp/ \
     && apt-get remove --purge -q -y curl unzip \
