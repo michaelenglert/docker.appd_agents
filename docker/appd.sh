@@ -6,7 +6,6 @@ find /opt/appdynamics/appagenttemp/ -iname controller-info.xml -exec /bin/bash -
 find /opt/appdynamics/appagenttemp/ -iname controller-info.xml -exec /bin/bash -c "sed -i -e \"/<controller-ssl-enabled>/c\<controller-ssl-enabled>$APPDYNAMICS_CONTROLLER_SSL_ENABLED<\/controller-ssl-enabled>\" {}" \;
 find /opt/appdynamics/appagenttemp/ -iname controller-info.xml -exec /bin/bash -c "sed -i -e \"/<account-name>/c\<account-name>$APPDYNAMICS_AGENT_ACCOUNT_NAME<\/account-name>\" {}" \;
 find /opt/appdynamics/appagenttemp/ -iname controller-info.xml -exec /bin/bash -c "sed -i -e \"/<account-access-key>/c\<account-access-key>$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY<\/account-access-key>\" {}" \;
-find /opt/appdynamics/appagenttemp/ -iname controller-info.xml -exec /bin/bash -c "sed -i -e \"/<agent-runtime-dir>/c\<agent-runtime-dir>\/<\/agent-runtime-dir>\" {}" \;
 
 cp -r /opt/appdynamics/appagenttemp/* /opt/appdynamics/appagent
 rm -rf /opt/appdynamics/appagenttemp/
