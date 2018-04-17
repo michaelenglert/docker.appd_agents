@@ -11,4 +11,8 @@ find /opt/appdynamics/appagenttemp/ -iname controller-info.xml -exec /bin/bash -
 cp -r /opt/appdynamics/appagenttemp/* /opt/appdynamics/appagent
 rm -rf /opt/appdynamics/appagenttemp/
 
+
+# Configure Docker Visibility
+find /opt/appdynamics/machineagent/ -iname DockerMonitoring.yml -exec /bin/bash -c "sed -i -e \"s/\.\*\[ \]-Dappdynamics//\" {}" \;
+
 exit 0
