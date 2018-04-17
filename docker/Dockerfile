@@ -15,11 +15,11 @@ ENV APPDYNAMICS_CONTROLLER_HOST_NAME="" \
 
 VOLUME /opt/appdynamics/appagent
 
-ADD setup_agent.sh /opt/appdynamics/
+ADD appd.sh /opt/appdynamics/
 
 RUN apt-get update \
     && apt-get install -q -y --fix-missing unzip curl \
-    && chmod +x /opt/appdynamics/setup_agent.sh \
+    && chmod +x /opt/appdynamics/appd.sh \
     && mkdir -p /opt/appdynamics/machineagent \
     && mkdir -p /opt/appdynamics/appagent \
     && curl -L -o /tmp/machineagent.zip $BASEURL/machine/$MACHINE_AGENT_VERSION/machineagent-bundle-64bit-linux-$MACHINE_AGENT_VERSION.zip \
@@ -31,4 +31,4 @@ RUN apt-get update \
     && apt-get clean -q -y \
     && rm -rf /tmp/*
 
-CMD /bin/bash -c "/opt/appdynamics/setup_agent.sh" && /opt/appdynamics/machineagent/bin/machine-agent start
+CMD /bin/bash -c "/opt/appdynamics/appd.sh" && /opt/appdynamics/machineagent/bin/machine-agent start
