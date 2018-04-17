@@ -9,6 +9,8 @@ read app_agent_version
 echo -e "\x1B[7mImage Name\x1B[27m"
 read image
 
+cd docker
+
 docker build \
 --build-arg BASEURL=https://packages.appdynamics.com \
 --build-arg MACHINE_AGENT_VERSION=$machine_agent_version \

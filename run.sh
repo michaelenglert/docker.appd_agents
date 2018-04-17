@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo -e "\x1B[7mContainer Name\x1B[27m"
+read container
+
 echo -e "\x1B[7mImage Name\x1B[27m"
 read image
 
@@ -24,7 +27,7 @@ read sim_enabled
 echo -e "\x1B[7mDocker enabled\x1B[27m"
 read docker_enabled
 
-docker run -d --name appd-agents \
+docker run -d --name $container \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /:/hostroot:ro \
     -v /tmp/app-agent:/app-agent \
