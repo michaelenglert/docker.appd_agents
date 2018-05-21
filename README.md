@@ -6,7 +6,9 @@ This Docker Image contains the AppDynamics Machine Agent and the Java Agent.
 Use the [build.sh] Script to build the Docker Image. It will interactively ask for:
 * ```MACHINE_AGENT_VERSION``` -  AppDynamics Machine Agent Version.
 * ```APP_AGENT_VERSION``` -  AppDynamics Java Agent Version.
-* ```Image Name``` - Image Name for the Docker Image
+* ```Image Name``` - Image Name for the Docker Image.
+* ```USER``` -  AppDynamics Portal User.
+* ```PASSWORD``` - AppDynamics Portal Password.
 
 # Run
 Sample ```docker run``` command:

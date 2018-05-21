@@ -4,6 +4,8 @@ MAINTAINER Michael Englert <michi.eng@gmail.com>
 ARG BASEURL
 ARG MACHINE_AGENT_VERSION
 ARG APP_AGENT_VERSION
+ARG USER
+ARG PASSWORD
 
 ENV APPDYNAMICS_CONTROLLER_HOST_NAME="" \
     APPDYNAMICS_CONTROLLER_PORT="8090" \
@@ -22,8 +24,9 @@ RUN apt-get update \
     && chmod +x /opt/appdynamics/appd.sh \
     && mkdir -p /opt/appdynamics/machineagent \
     && mkdir -p /opt/appdynamics/appagent \
-    && curl -L -o /tmp/machineagent.zip $BASEURL/machine/$MACHINE_AGENT_VERSION/machineagent-bundle-64bit-linux-$MACHINE_AGENT_VERSION.zip \
-    && curl -L -o /tmp/appagent.zip $BASEURL/java/$APP_AGENT_VERSION/AppServerAgent-$APP_AGENT_VERSION.zip \
+    && curl --referer http://www.appdynamics.com -c /tmp/cookies.txt -d "username=$USER&password=$PASSWORD" https://login.appdynamics.com/sso/login/ \
+    && curl -L -b /tmp/cookies.txt -o /tmp/machineagent.zip $BASEURL/machine-bundle/$MACHINE_AGENT_VERSION/machineagent-bundle-64bit-linux-$MACHINE_AGENT_VERSION.zip \
+    && curl -L -b /tmp/cookies.txt -o /tmp/appagent.zip $BASEURL/sun-jvm/$APP_AGENT_VERSION/AppServerAgent-$APP_AGENT_VERSION.zip \
     && unzip /tmp/machineagent.zip -d /opt/appdynamics/machineagent \
     && unzip /tmp/appagent.zip -d /opt/appdynamics/appagenttemp \
     && apt-get remove --purge -q -y curl unzip \
