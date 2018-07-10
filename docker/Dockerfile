@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER Michael Englert <michi.eng@gmail.com>
+LABEL maintainer="Michael Englert <michi.eng@gmail.com>"
 
 ARG BASEURL
 ARG MACHINE_AGENT_VERSION
