@@ -85,7 +85,11 @@ then
     fi
     sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
         $APPD_MACHINE/conf/logging/log4j.xml
+    sed -i -e 's/ABSOLUTE/DATE/' \
+        $APPD_MACHINE/conf/logging/log4j.xml
     sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
+        $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
+    sed -i -e 's/ABSOLUTE/DATE/' \
         $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
     echo "Logging set to Standard Out."
 elif [ "$APPDYNAMICS_STDOUT_LOGGING" = "false" ]
