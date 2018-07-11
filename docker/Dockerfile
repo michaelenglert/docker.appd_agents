@@ -23,7 +23,7 @@ RUN unzip /tmp/machineagent.zip -d /opt/appdynamics/machineagent
 RUN unzip /tmp/appagent.zip -d /opt/appdynamics/appagenttemp
 
 
-FROM openjdk:8-jre-alpine
+FROM openjdk:8-jre-slim
 LABEL maintainer="Michael Englert <michi.eng@gmail.com>"
 
 ENV APPDYNAMICS_CONTROLLER_HOST_NAME="" \
@@ -33,7 +33,7 @@ ENV APPDYNAMICS_CONTROLLER_HOST_NAME="" \
     APPDYNAMICS_SIM_ENABLED="false" \
     APPDYNAMICS_DOCKER_ENABLED="false" \
     APPDYNAMICS_CONTROLLER_SSL_ENABLED="false" \
-    APP_AGENT_TMP="/opt/appdynamics/appagenttemp/"
+    APPDYNAMICS_STDOUT_LOGGING="true"
 
 VOLUME /opt/appdynamics/appagent
 
