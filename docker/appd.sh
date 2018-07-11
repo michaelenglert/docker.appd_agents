@@ -23,7 +23,7 @@ if [ -d "$APPD_APP_AGENT_TMP" ]; then
     find $APPD_APP_AGENT_TMP \
         -iname controller-info.xml \
         -exec /bin/sh -c "sed -i -e \"/<account-access-key>/c\<account-access-key>$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY<\/account-access-key>\" {}" \;
-    cp -r $APPD_APP_AGENT_TMP/* /opt/appdynamics/appagent
+    cp -r $APPD_APP_AGENT_TMP/* $APPD_ROOT/appagent
     rm -rf $APPD_APP_AGENT_TMP
     echo "App Agent controller-info.xml configured."
 else
@@ -31,7 +31,7 @@ else
 fi
 
 # Configure Docker Visibility
-find /opt/appdynamics/machineagent/ \
+find $APPD_MACHINE \
     -iname DockerMonitoring.yml \
     -exec /bin/sh -c "sed -i -e \"s/\.\*\[ \]-Dappdynamics//\" {}" \;
 echo "Docker Visibility Process Selector generified."
@@ -69,7 +69,7 @@ else
     echo "Analytics not enabled cause either APPDYNAMICS_AGENT_GLOBAL_ACCOUNT_NAME or APPDYNAMICS_ANALYTICS_EVENT_ENDPOINT is missing."
 fi
 
-APPD_APP_AGENT_VERSION="$(find /opt/appdynamics/appagent/ -name ver4*)"
+APPD_APP_AGENT_VERSION="$(find $APPD_ROOT/appagent/ -name ver4*)"
 
 if [ "$APPDYNAMICS_STDOUT_LOGGING" = "true" ]
 then
@@ -104,7 +104,7 @@ then
 fi
 
 # Cleanup old .id files
-find /opt/appdynamics/ -iname *.id -exec /bin/sh -c "rm -rf {}" \;
+find $APPD_ROOT -iname *.id -exec /bin/sh -c "rm -rf {}" \;
 
 $APPD_MACHINE/bin/machine-agent start
 
