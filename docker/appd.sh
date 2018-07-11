@@ -106,4 +106,6 @@ fi
 # Cleanup old .id files
 find /opt/appdynamics/ -iname *.id -exec /bin/sh -c "rm -rf {}" \;
 
+$APPD_MACHINE/bin/machine-agent start
+
 exit 0

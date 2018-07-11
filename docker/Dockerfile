@@ -39,4 +39,4 @@ VOLUME /opt/appdynamics/appagent
 
 COPY --from=builder /opt/appdynamics /opt/appdynamics
 
-CMD /bin/sh -c "/opt/appdynamics/appd.sh" && /opt/appdynamics/machineagent/bin/machine-agent start
+CMD [ "/bin/sh", "-c", "/opt/appdynamics/appd.sh" ]
