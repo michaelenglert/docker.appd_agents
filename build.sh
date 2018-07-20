@@ -20,7 +20,7 @@ cd docker
 docker build \
 --build-arg USER=$user \
 --build-arg PASSWORD=$password \
---build-arg BASEURL=https://aperture.appdynamics.com/download/prox/download-file \
+--build-arg BASEURL=https://download.appdynamics.com/download/prox/download-file \
 --build-arg MACHINE_AGENT_VERSION=$machine_agent_version \
 --build-arg APP_AGENT_VERSION=$app_agent_version \
 -t $image:latest .
