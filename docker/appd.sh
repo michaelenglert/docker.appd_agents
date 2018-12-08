@@ -1,8 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-APPD_ROOT="/opt/appdynamics"
-APPD_APP_AGENT_TMP="$APPD_ROOT/appagenttemp/"
-APPD_MACHINE="$APPD_ROOT/machineagent"
+APPD_APP_AGENT_TMP="$APPD_HOME/appagenttemp/"
+APPD_MACHINE="$APPD_HOME/machineagent"
 APPD_ANALYTICS="$APPD_MACHINE/monitors/analytics-agent"
 
 # Configure App Agent
@@ -22,7 +21,7 @@ if [ -d "$APPD_APP_AGENT_TMP" ]; then
     find $APPD_APP_AGENT_TMP \
         -iname controller-info.xml \
         -exec /bin/sh -c "sed -i -e \"/-key>/c\<account-access-key>$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY<\/account-access-key>\" {}" \;
-    cp -r $APPD_APP_AGENT_TMP/* $APPD_ROOT/appagent
+    cp -r $APPD_APP_AGENT_TMP/* $APPD_HOME/appagent
     rm -rf $APPD_APP_AGENT_TMP
     echo "$(date -u +%d\ %b\ %Y\ %H:%M:%S) INFO [appd.sh] \
         App Agent controller-info.xml configured."
@@ -81,7 +80,7 @@ else
         Analytics not enabled cause either APPDYNAMICS_AGENT_GLOBAL_ACCOUNT_NAME or APPDYNAMICS_ANALYTICS_EVENT_ENDPOINT is missing."
 fi
 
-APPD_APP_AGENT_VERSION="$(find $APPD_ROOT/appagent/ -name ver4*)"
+APPD_APP_AGENT_VERSIONS="$(find $APPD_HOME/appagent/ -name ver4*)"
 
 if [ "$APPDYNAMICS_STDOUT_LOGGING" = "true" ]
 then
@@ -90,19 +89,21 @@ then
         cp  $APPD_MACHINE/conf/logging/log4j.xml \
             $APPD_MACHINE/conf/logging/log4j.xml.backup
     fi
-    if [ ! -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup ]
-    then
-        cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml \
-            $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup
-    fi
-    sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
-        $APPD_MACHINE/conf/logging/log4j.xml
-    sed -i -e 's/ABSOLUTE/DATE/' \
-        $APPD_MACHINE/conf/logging/log4j.xml
-    sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
-        $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
-    sed -i -e 's/ABSOLUTE/DATE/' \
-        $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
+    while read -r APPD_APP_AGENT_VERSION; do
+        if [ ! -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup ]
+        then
+            cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml \
+                $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup
+        fi
+        sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
+            $APPD_MACHINE/conf/logging/log4j.xml
+        sed -i -e 's/ABSOLUTE/DATE/' \
+            $APPD_MACHINE/conf/logging/log4j.xml
+        sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
+            $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
+        sed -i -e 's/ABSOLUTE/DATE/' \
+            $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
+    done <<< "$APPD_APP_AGENT_VERSIONS"
     echo "$(date -u +%d\ %b\ %Y\ %H:%M:%S) INFO [appd.sh] Logging set to Standard Out."
 elif [ "$APPDYNAMICS_STDOUT_LOGGING" = "false" ]
 then
@@ -111,16 +112,18 @@ then
         cp  $APPD_MACHINE/conf/logging/log4j.xml.backup \
             $APPD_MACHINE/conf/logging/log4j.xml
     fi
-    if [ -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup ]
-    then
-        cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup \
-            $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
-    fi
+    while read -r APPD_APP_AGENT_VERSION; do
+        if [ -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup ]
+        then
+            cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup \
+                $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
+        fi
+    done <<< "$APPD_APP_AGENT_VERSIONS"
     echo "$(date -u +%d\ %b\ %Y\ %H:%M:%S) INFO [appd.sh] Logging set to File."
 fi
 
 # Cleanup old .id files
-find $APPD_ROOT -iname *.id -exec /bin/sh -c "rm -rf {}" \;
+find $APPD_HOME -iname *.id -exec /bin/sh -c "rm -rf {}" \;
 
 $APPD_MACHINE/bin/machine-agent start
 
