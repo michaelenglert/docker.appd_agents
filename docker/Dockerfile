@@ -1,7 +1,7 @@
 FROM alpine AS builder
 LABEL maintainer="Michael Englert <michi.eng@gmail.com>"
 
-ARG BASEURL
+ARG BASEURL="https://download.appdynamics.com/download/prox/download-file"
 ARG MACHINE_AGENT_VERSION
 ARG APP_AGENT_VERSION
 ARG USER
