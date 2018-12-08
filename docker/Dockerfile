@@ -42,4 +42,4 @@ VOLUME ${APPD_HOME}/appagent
 
 COPY --from=builder ${APPD_HOME} ${APPD_HOME}
 
-CMD [ "/bin/sh", "-c", "${APPD_HOME}/appd.sh" ]
+CMD [ "/bin/bash", "-c", "${APPD_HOME}/appd.sh" ]
