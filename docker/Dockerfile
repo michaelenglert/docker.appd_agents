@@ -9,12 +9,12 @@ ARG PASSWORD
 
 ENV APPD_HOME="/opt/appdynamics"
 
-ADD appd.sh ${APPD_HOME}/
+ADD agents.sh ${APPD_HOME}/
 
 RUN apk update  
 RUN apk upgrade
 RUN apk add unzip curl
-RUN chmod +x ${APPD_HOME}/appd.sh
+RUN chmod +x ${APPD_HOME}/agents.sh
 RUN mkdir -p ${APPD_HOME}/machineagent
 RUN mkdir -p ${APPD_HOME}/appagent
 RUN mkdir -p ${APPD_HOME}/appagenttemp
@@ -42,4 +42,4 @@ VOLUME ${APPD_HOME}/appagent
 
 COPY --from=builder ${APPD_HOME} ${APPD_HOME}
 
-CMD [ "/bin/bash", "-c", "${APPD_HOME}/appd.sh" ]
+CMD [ "/bin/bash", "-c", "${APPD_HOME}/agents.sh" ]
