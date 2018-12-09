@@ -42,4 +42,7 @@ VOLUME ${APPD_HOME}/appagent
 
 COPY --from=builder ${APPD_HOME} ${APPD_HOME}
 
+RUN apt-get update \
+    && apt-get install --fix-missing -q -y procps
+
 CMD [ "/bin/bash", "-c", "${APPD_HOME}/agents.sh" ]
