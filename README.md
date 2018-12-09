@@ -24,6 +24,9 @@ docker run -d --name <container-name> \
     -e APPDYNAMICS_SIM_ENABLED="true/false" \
     -e APPDYNAMICS_CONTROLLER_SSL_ENABLED="true/false" \
     -e APPDYNAMICS_DOCKER_ENABLED="true/false" \
+    -e APPDYNAMICS_STDOUT_LOGGING="true/false" \
+    -e APPDYNAMICS_AGENT_GLOBAL_ACCOUNT_NAME="<global-account-name>" \
+    -e APPDYNAMICS_ANALYTICS_EVENT_ENDPOINT="<events-service-url>" \
     <image-name>
 ```
 Notes:
