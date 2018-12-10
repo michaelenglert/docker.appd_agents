@@ -89,20 +89,35 @@ then
         cp  $APPD_MACHINE/conf/logging/log4j.xml \
             $APPD_MACHINE/conf/logging/log4j.xml.backup
     fi
+    sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
+        $APPD_MACHINE/conf/logging/log4j.xml
+    sed -i -e 's/ABSOLUTE/DATE/' \
+        $APPD_MACHINE/conf/logging/log4j.xml
+    
     while read -r APPD_APP_AGENT_VERSION; do
-        if [ ! -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup ]
+        if [ -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml ]
         then
-            cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml \
-                $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup
+            if [ ! -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup ]
+            then
+                cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml \
+                    $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup
+            fi
+            sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
+                $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
+            sed -i -e 's/ABSOLUTE/DATE/' \
+                $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
+        elif [ -e $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml ]
+        then
+            if [ ! -e $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml.backup ]
+            then
+                cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml \
+                    $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml.backup
+            fi
+            sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
+                $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml
+            sed -i -e 's/ABSOLUTE/DATE/' \
+                $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml
         fi
-        sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
-            $APPD_MACHINE/conf/logging/log4j.xml
-        sed -i -e 's/ABSOLUTE/DATE/' \
-            $APPD_MACHINE/conf/logging/log4j.xml
-        sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
-            $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
-        sed -i -e 's/ABSOLUTE/DATE/' \
-            $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
     done <<< "$APPD_APP_AGENT_VERSIONS"
     echo "$(date -u +%d\ %b\ %Y\ %H:%M:%S) INFO [appd.sh] Logging set to Standard Out."
 elif [ "$APPDYNAMICS_STDOUT_LOGGING" = "false" ]
