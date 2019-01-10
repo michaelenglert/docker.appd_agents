@@ -10,6 +10,16 @@ Use the [build.sh] Script to build the Docker Image. It will interactively ask f
 * ```USER``` -  AppDynamics Portal User.
 * ```PASSWORD``` - AppDynamics Portal Password.
 
+# Build - Offline
+If you can't dowload the Agent Bits from the machine the Docker Image will be built on you can also build it offline:
+* Clone/Download the Repository
+* Go into the offline folder ```cd docker-offline```
+* Download the latest ```Machine Agent (zip)``` and ```Java Agent - Sun and JRockit JVM (zip)``` from the [AppDynamics Download Server]
+* Copy ```Machine Agent (zip)``` as ```machineagent.zip``` into the ```docker-offline``` folder
+* Copy ```Java Agent - Sun and JRockit JVM (zip)``` as ```appagent.zip``` into the ```docker-offline``` folder
+* Build the Docker Image ```docker build -t <image-name> .```
+
+
 # Run
 Sample ```docker run``` command:
 ```
@@ -45,3 +55,4 @@ docker run -d --name <app-container-name> \
 ```
 
 [build.sh]: /build.sh
+[AppDynamics Download Server]: https://download.appdynamics.com
