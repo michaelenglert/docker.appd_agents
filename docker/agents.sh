@@ -3,6 +3,7 @@
 APPD_APP_AGENT_TMP="$APPD_HOME/appagenttemp/"
 APPD_MACHINE="$APPD_HOME/machineagent"
 APPD_ANALYTICS="$APPD_MACHINE/monitors/analytics-agent"
+APPD_SIM_MEMORY="256m"
 
 # Configure App Agent
 if [ -d "$APPD_APP_AGENT_TMP" ]; then
@@ -140,6 +141,11 @@ fi
 # Cleanup old .id files
 find $APPD_HOME -iname *.id -exec /bin/sh -c "rm -rf {}" \;
 
-$APPD_MACHINE/bin/machine-agent start
+if [ -n "${APPDYNAMICS_SIM_MEMORY:+1}" ]
+then
+    APPD_SIM_MEMORY=$APPDYNAMICS_SIM_MEMORY
+fi
+
+$APPD_MACHINE/bin/machine-agent -Xmx$APPD_SIM_MEMORY -Xms$APPD_SIM_MEMORY start
 
 exit 0
