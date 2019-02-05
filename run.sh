@@ -30,7 +30,7 @@ read docker_enabled
 docker run -d --name $container \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /:/hostroot:ro \
-    -v /tmp/app-agent:/opt/appdynamics/appagent/ \
+    -v /tmp/java-agent:/opt/appdynamics/java-agent/ \
     -e APPDYNAMICS_CONTROLLER_HOST_NAME="$controller_host" \
     -e APPDYNAMICS_CONTROLLER_PORT="$controller_port" \
     -e APPDYNAMICS_AGENT_ACCOUNT_NAME="$account_name" \

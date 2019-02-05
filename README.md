@@ -5,7 +5,7 @@ This Docker Image contains the AppDynamics Machine Agent and the Java Agent.
 # Build
 Use the [build.sh] Script to build the Docker Image. It will interactively ask for:
 * ```MACHINE_AGENT_VERSION``` -  AppDynamics Machine Agent Version.
-* ```APP_AGENT_VERSION``` -  AppDynamics Java Agent Version.
+* ```JAVA_AGENT_VERSION``` -  AppDynamics Java Agent Version.
 * ```Image Name``` - Image Name for the Docker Image.
 * ```USER``` -  AppDynamics Portal User.
 * ```PASSWORD``` - AppDynamics Portal Password.
@@ -16,7 +16,7 @@ If you can't dowload the Agent Bits from the machine the Docker Image will be bu
 * Go into the offline folder ```cd docker-offline```
 * Download the latest ```Machine Agent (zip)``` and ```Java Agent - Sun and JRockit JVM (zip)``` from the [AppDynamics Download Server]
 * Copy ```Machine Agent (zip)``` as ```machineagent.zip``` into the ```docker-offline``` folder
-* Copy ```Java Agent - Sun and JRockit JVM (zip)``` as ```appagent.zip``` into the ```docker-offline``` folder
+* Copy ```Java Agent - Sun and JRockit JVM (zip)``` as ```java-agent.zip``` into the ```docker-offline``` folder
 * Build the Docker Image ```docker build -t <image-name> .```
 
 
@@ -26,7 +26,7 @@ Sample ```docker run``` command:
 docker run -d --name <container-name> \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /:/hostroot:ro \
-    -v <host-folder>:/app-agent \
+    -v <host-folder>:/opt/appdynamics/java-agent \
     -e APPDYNAMICS_CONTROLLER_HOST_NAME="<controller-host>" \
     -e APPDYNAMICS_CONTROLLER_PORT="<controller-port>" \
     -e APPDYNAMICS_AGENT_ACCOUNT_NAME="<account-name>" \
@@ -47,10 +47,10 @@ Notes:
 # Sample Application
 ```
 docker run -d --name <app-container-name> \
-    -v <host-folder>:/app-agent \
+    -v <host-folder>:/java-agent \
     -e APPDYNAMICS_AGENT_APPLICATION_NAME="<application-name>" \
     -e APPDYNAMICS_AGENT_TIER_NAME="<tier-name>" \
-    -e CATALINA_OPTS="-Dappdynamics.agent.reuse.nodeName.prefix=$APPDYNAMICS_AGENT_TIER -Dappdynamics.agent.reuse.nodeName=true -javaagent:/app-agent/javaagent.jar" \
+    -e CATALINA_OPTS="-Dappdynamics.agent.reuse.nodeName.prefix=$APPDYNAMICS_AGENT_TIER -Dappdynamics.agent.reuse.nodeName=true -javaagent:/java-agent/javaagent.jar" \
     snasello/liferay-6.2
 ```
 

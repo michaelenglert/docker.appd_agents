@@ -5,17 +5,17 @@ ENV APPD_HOME="/opt/appdynamics"
 
 ADD agents.sh ${APPD_HOME}/
 ADD machineagent.zip /tmp/
-ADD appagent.zip /tmp/
+ADD java-agent.zip /tmp/
 
 RUN apk update  
 RUN apk upgrade
 RUN apk add unzip
 RUN chmod +x ${APPD_HOME}/agents.sh
 RUN mkdir -p ${APPD_HOME}/machineagent
-RUN mkdir -p ${APPD_HOME}/appagent
-RUN mkdir -p ${APPD_HOME}/appagenttemp
+RUN mkdir -p ${APPD_HOME}/java-agent
+RUN mkdir -p ${APPD_HOME}/java-agenttemp
 RUN unzip /tmp/machineagent.zip -d ${APPD_HOME}/machineagent
-RUN unzip /tmp/appagent.zip -d ${APPD_HOME}/appagenttemp
+RUN unzip /tmp/java-agent.zip -d ${APPD_HOME}/java-agenttemp
 
 
 FROM openjdk:8-jre-slim
@@ -31,7 +31,7 @@ ENV APPD_HOME="/opt/appdynamics" \
     APPDYNAMICS_CONTROLLER_SSL_ENABLED="false" \
     APPDYNAMICS_STDOUT_LOGGING="true"
 
-VOLUME ${APPD_HOME}/appagent
+VOLUME ${APPD_HOME}/java-agent
 
 COPY --from=builder ${APPD_HOME} ${APPD_HOME}
 

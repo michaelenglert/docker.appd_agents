@@ -1,34 +1,34 @@
 #!/bin/bash
 
-APPD_APP_AGENT_TMP="$APPD_HOME/appagenttemp/"
+APPD_JAVA_AGENT_TMP="$APPD_HOME/java-agenttemp/"
 APPD_MACHINE="$APPD_HOME/machineagent"
 APPD_ANALYTICS="$APPD_MACHINE/monitors/analytics-agent"
 APPD_MEMORY="256m"
 
 # Configure App Agent
-if [ -d "$APPD_APP_AGENT_TMP" ]; then
-    find $APPD_APP_AGENT_TMP \
+if [ -d "$APPD_JAVA_AGENT_TMP" ]; then
+    find $APPD_JAVA_AGENT_TMP \
         -iname controller-info.xml \
         -exec /bin/sh -c "sed -i -e \"/-host>/c\<controller-host>$APPDYNAMICS_CONTROLLER_HOST_NAME<\/controller-host>\" {}" \;
-    find $APPD_APP_AGENT_TMP \
+    find $APPD_JAVA_AGENT_TMP \
         -iname controller-info.xml \
         -exec /bin/sh -c "sed -i -e \"/-port>/c\<controller-port>$APPDYNAMICS_CONTROLLER_PORT<\/controller-port>\" {}" \;
-    find $APPD_APP_AGENT_TMP \
+    find $APPD_JAVA_AGENT_TMP \
         -iname controller-info.xml \
         -exec /bin/sh -c "sed -i -e \"/-ssl-enabled>/c\<controller-ssl-enabled>$APPDYNAMICS_CONTROLLER_SSL_ENABLED<\/controller-ssl-enabled>\" {}" \;
-    find $APPD_APP_AGENT_TMP \
+    find $APPD_JAVA_AGENT_TMP \
         -iname controller-info.xml \
         -exec /bin/sh -c "sed -i -e \"/<account-name>/c\<account-name>$APPDYNAMICS_AGENT_ACCOUNT_NAME<\/account-name>\" {}" \;
-    find $APPD_APP_AGENT_TMP \
+    find $APPD_JAVA_AGENT_TMP \
         -iname controller-info.xml \
         -exec /bin/sh -c "sed -i -e \"/-key>/c\<account-access-key>$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY<\/account-access-key>\" {}" \;
-    cp -r $APPD_APP_AGENT_TMP/* $APPD_HOME/appagent
-    rm -rf $APPD_APP_AGENT_TMP
+    cp -r $APPD_JAVA_AGENT_TMP/* $APPD_HOME/java-agent
+    rm -rf $APPD_JAVA_AGENT_TMP
     echo "$(date -u +%d\ %b\ %Y\ %H:%M:%S) INFO [appd.sh] \
         App Agent controller-info.xml configured."
 else
     echo "$(date -u +%d\ %b\ %Y\ %H:%M:%S) INFO [appd.sh] \
-        APPD_APP_AGENT_TMP directory ($APPD_APP_AGENT_TMP) does not exist --> App Agent controller-info.xml is already configured."
+        APPD_JAVA_AGENT_TMP directory ($APPD_JAVA_AGENT_TMP) does not exist --> App Agent controller-info.xml is already configured."
 fi
 
 # Configure Docker Visibility
@@ -81,7 +81,7 @@ else
         Analytics not enabled cause either APPDYNAMICS_AGENT_GLOBAL_ACCOUNT_NAME or APPDYNAMICS_ANALYTICS_EVENT_ENDPOINT is missing."
 fi
 
-APPD_APP_AGENT_VERSIONS="$(find $APPD_HOME/appagent/ -name ver4*)"
+APPD_JAVA_AGENT_VERSIONS="$(find $APPD_HOME/java-agent/ -name ver4*)"
 
 if [ "$APPDYNAMICS_STDOUT_LOGGING" = "true" ]
 then
@@ -95,31 +95,31 @@ then
     sed -i -e 's/ABSOLUTE/DATE/' \
         $APPD_MACHINE/conf/logging/log4j.xml
     
-    while read -r APPD_APP_AGENT_VERSION; do
-        if [ -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml ]
+    while read -r APPD_JAVA_AGENT_VERSION; do
+        if [ -e $APPD_JAVA_AGENT_VERSION/conf/logging/log4j.xml ]
         then
-            if [ ! -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup ]
+            if [ ! -e $APPD_JAVA_AGENT_VERSION/conf/logging/log4j.xml.backup ]
             then
-                cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml \
-                    $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup
+                cp  $APPD_JAVA_AGENT_VERSION/conf/logging/log4j.xml \
+                    $APPD_JAVA_AGENT_VERSION/conf/logging/log4j.xml.backup
             fi
             sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
-                $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
+                $APPD_JAVA_AGENT_VERSION/conf/logging/log4j.xml
             sed -i -e 's/ABSOLUTE/DATE/' \
-                $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
-        elif [ -e $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml ]
+                $APPD_JAVA_AGENT_VERSION/conf/logging/log4j.xml
+        elif [ -e $APPD_JAVA_AGENT_VERSION/conf/logging/log4j2.xml ]
         then
-            if [ ! -e $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml.backup ]
+            if [ ! -e $APPD_JAVA_AGENT_VERSION/conf/logging/log4j2.xml.backup ]
             then
-                cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml \
-                    $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml.backup
+                cp  $APPD_JAVA_AGENT_VERSION/conf/logging/log4j2.xml \
+                    $APPD_JAVA_AGENT_VERSION/conf/logging/log4j2.xml.backup
             fi
             sed -i -e 's/ref="\w*"/ref="ConsoleAppender"/g' \
-                $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml
+                $APPD_JAVA_AGENT_VERSION/conf/logging/log4j2.xml
             sed -i -e 's/ABSOLUTE/DATE/' \
-                $APPD_APP_AGENT_VERSION/conf/logging/log4j2.xml
+                $APPD_JAVA_AGENT_VERSION/conf/logging/log4j2.xml
         fi
-    done <<< "$APPD_APP_AGENT_VERSIONS"
+    done <<< "$APPD_JAVA_AGENT_VERSIONS"
     echo "$(date -u +%d\ %b\ %Y\ %H:%M:%S) INFO [appd.sh] Logging set to Standard Out."
 elif [ "$APPDYNAMICS_STDOUT_LOGGING" = "false" ]
 then
@@ -128,13 +128,13 @@ then
         cp  $APPD_MACHINE/conf/logging/log4j.xml.backup \
             $APPD_MACHINE/conf/logging/log4j.xml
     fi
-    while read -r APPD_APP_AGENT_VERSION; do
-        if [ -e $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup ]
+    while read -r APPD_JAVA_AGENT_VERSION; do
+        if [ -e $APPD_JAVA_AGENT_VERSION/conf/logging/log4j.xml.backup ]
         then
-            cp  $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml.backup \
-                $APPD_APP_AGENT_VERSION/conf/logging/log4j.xml
+            cp  $APPD_JAVA_AGENT_VERSION/conf/logging/log4j.xml.backup \
+                $APPD_JAVA_AGENT_VERSION/conf/logging/log4j.xml
         fi
-    done <<< "$APPD_APP_AGENT_VERSIONS"
+    done <<< "$APPD_JAVA_AGENT_VERSIONS"
     echo "$(date -u +%d\ %b\ %Y\ %H:%M:%S) INFO [appd.sh] Logging set to File."
 fi
 
