@@ -1,7 +1,7 @@
 #!/bin/bash
 
 APPD_JAVA_AGENT_TMP="$APPD_HOME/java-agenttemp/"
-APPD_MACHINE="$APPD_HOME/machineagent"
+APPD_MACHINE="$APPD_HOME/machine-agent"
 APPD_ANALYTICS="$APPD_MACHINE/monitors/analytics-agent"
 APPD_MEMORY="256m"
 

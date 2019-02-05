@@ -15,13 +15,13 @@ RUN apk update
 RUN apk upgrade
 RUN apk add unzip curl
 RUN chmod +x ${APPD_HOME}/agents.sh
-RUN mkdir -p ${APPD_HOME}/machineagent
+RUN mkdir -p ${APPD_HOME}/machine-agent
 RUN mkdir -p ${APPD_HOME}/java-agent
 RUN mkdir -p ${APPD_HOME}/java-agenttemp
 RUN curl --referer http://www.appdynamics.com -c /tmp/cookies.txt -d "username=${USER}&password=${PASSWORD}" https://login.appdynamics.com/sso/login/
-RUN curl -L -b /tmp/cookies.txt -o /tmp/machineagent.zip ${BASEURL}/machine/${MACHINE_AGENT_VERSION}/MachineAgent-${MACHINE_AGENT_VERSION}.zip
+RUN curl -L -b /tmp/cookies.txt -o /tmp/machine-agent.zip ${BASEURL}/machine/${MACHINE_AGENT_VERSION}/MachineAgent-${MACHINE_AGENT_VERSION}.zip
 RUN curl -L -b /tmp/cookies.txt -o /tmp/java-agent.zip ${BASEURL}/sun-jvm/${JAVA_AGENT_VERSION}/AppServerAgent-${JAVA_AGENT_VERSION}.zip
-RUN unzip /tmp/machineagent.zip -d ${APPD_HOME}/machineagent
+RUN unzip /tmp/machine-agent.zip -d ${APPD_HOME}/machine-agent
 RUN unzip /tmp/java-agent.zip -d ${APPD_HOME}/java-agenttemp
 
 

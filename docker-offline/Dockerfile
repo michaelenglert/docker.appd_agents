@@ -4,17 +4,17 @@ LABEL maintainer="Michael Englert <michi.eng@gmail.com>"
 ENV APPD_HOME="/opt/appdynamics"
 
 ADD agents.sh ${APPD_HOME}/
-ADD machineagent.zip /tmp/
+ADD machine-agent.zip /tmp/
 ADD java-agent.zip /tmp/
 
 RUN apk update  
 RUN apk upgrade
 RUN apk add unzip
 RUN chmod +x ${APPD_HOME}/agents.sh
-RUN mkdir -p ${APPD_HOME}/machineagent
+RUN mkdir -p ${APPD_HOME}/machine-agent
 RUN mkdir -p ${APPD_HOME}/java-agent
 RUN mkdir -p ${APPD_HOME}/java-agenttemp
-RUN unzip /tmp/machineagent.zip -d ${APPD_HOME}/machineagent
+RUN unzip /tmp/machine-agent.zip -d ${APPD_HOME}/machine-agent
 RUN unzip /tmp/java-agent.zip -d ${APPD_HOME}/java-agenttemp
 
 

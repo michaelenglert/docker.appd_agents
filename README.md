@@ -15,7 +15,7 @@ If you can't dowload the Agent Bits from the machine the Docker Image will be bu
 * Clone/Download the Repository
 * Go into the offline folder ```cd docker-offline```
 * Download the latest ```Machine Agent (zip)``` and ```Java Agent - Sun and JRockit JVM (zip)``` from the [AppDynamics Download Server]
-* Copy ```Machine Agent (zip)``` as ```machineagent.zip``` into the ```docker-offline``` folder
+* Copy ```Machine Agent (zip)``` as ```machine-agent.zip``` into the ```docker-offline``` folder
 * Copy ```Java Agent - Sun and JRockit JVM (zip)``` as ```java-agent.zip``` into the ```docker-offline``` folder
 * Build the Docker Image ```docker build -t <image-name> .```
 
